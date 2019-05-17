@@ -1,7 +1,7 @@
 {
-  "name": "localstorage-thunk",
+  "name": "localstorage-redux",
   "version": "1.0.0",
-  "description": "Describe localstorage-thunk here",
+  "description": "Store your redux state to localstorage / any storage you specify",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -17,9 +17,12 @@
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.throttle": "^4.1.1"
+  },
   "devDependencies": {
-    "nwb": "0.23.x"
+    "nwb": "0.23.x",
+    "redux": "^4.0.1"
   },
   "author": "Tevin Thuku <tevinthuku@gmail.com>",
   "homepage": "",
