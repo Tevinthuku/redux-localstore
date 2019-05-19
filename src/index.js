@@ -1,7 +1,11 @@
 import throttle from "lodash.throttle";
 
 const DEFAULT_STORE_NAME = "__REDUX__STORE__";
-
+/**
+ *
+ * @param {object} storage - provide your own storage solution as long as it has the getItem function
+ * @param {string} storename - you can provide your own custom storename the default is __REDUX__STORE__
+ */
 export const loadState = (
   storage = undefined,
   storename = DEFAULT_STORE_NAME
@@ -15,6 +19,18 @@ export const loadState = (
     return undefined;
   }
 };
+
+/**
+ *
+ * @param {object} store - redux store :)
+ * @param {*} storage - default store is the browsers localStorage
+ *                      but you can provide your own
+ *                      if it provides the setItem prop
+ * @param {*} storename - then name of the storege key..
+ *                        Same as the one provided in loadState
+ * @param {*} timer - throttling time to make sure the call to
+ *                      subscribe is not overly called upon because of the expensive JSON.stringify function.
+ */
 
 export const saveState = (
   store,

@@ -48,7 +48,6 @@ const storageMock = () => {
 
   return {
     setItem: (key, value) => {
-      console.error(key);
       storage[key] = value;
     },
     getItem: key => {
@@ -106,5 +105,13 @@ describe("Testing the redux store with the 2 methods", () => {
     store = createStore(todos, loadState(newMockStorage, storeTestName));
     saveState(store, newMockStorage, storeTestName);
     expect(store.getState()).toEqual(["Read the docs"]);
+  });
+  it("should return empty list if bad state is recorded into the store", () => {
+    let newMockStorage = storageMock();
+    // state item should be serializable. but instead here, Im passing an array
+    newMockStorage.setItem(storeTestName, ["New state"]);
+    store = createStore(todos, loadState(newMockStorage, storeTestName));
+    saveState(store, newMockStorage, storeTestName);
+    expect(store.getState()).toEqual([]);
   });
 });
