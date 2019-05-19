@@ -14,6 +14,8 @@ Installation
 
 ```bash
 yarn add localstorage-redux
+or
+npm install localstorage-redux
 ```
 
 
