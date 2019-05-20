@@ -68,8 +68,11 @@ function todos(state = [], action) {
 }
 const storageModule = storageMock();
 const store = createStore(todos, loadState(storageModule, storeTestName));
-saveState(store, storageModule, storeTestName);
-
+ saveState({
+      store,
+      storage: storageModule,
+      storename: storeTestName
+      });
 ```
 
 
