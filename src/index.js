@@ -26,23 +26,27 @@ export const loadState = (
  * @param {*} storage - default store is the browsers localStorage
  *                      but you can provide your own
  *                      if it provides the setItem prop
- * @param {*} storename - then name of the storege key..
+ * @param {string} storename - then name of the storege key..
  *                        Same as the one provided in loadState
+ * @param {array} items - provide specific items you want to save to localStorage
  * @param {*} timer - throttling time to make sure the call to
  *                      subscribe is not overly called upon because of the expensive JSON.stringify function.
  */
 
-export const saveState = (
+export const saveState = ({
   store,
   storage = undefined,
   storename = DEFAULT_STORE_NAME,
+  items = [],
   timer = 2000
-) => {
+}) => {
   store.subscribe(
     throttle(() => {
       try {
         const storeModule = storage || window.localStorage;
-        const serializedState = JSON.stringify(store.getState());
+        const serializedState = JSON.stringify(
+          pickStateItems(store.getState(), items)
+        );
         storeModule.setItem(storename, serializedState);
       } catch (err) {}
     }, timer)
