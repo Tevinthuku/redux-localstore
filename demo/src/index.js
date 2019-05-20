@@ -13,7 +13,7 @@ import { loadState, saveState } from "../../src";
 
 const preloadedState = loadState();
 const store = createStore(counter, preloadedState);
-saveState(store);
+saveState({ store });
 ReactDOM.render(
   <Provider {...{ store }}>
     <App />

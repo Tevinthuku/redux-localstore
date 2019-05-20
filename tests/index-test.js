@@ -1,5 +1,5 @@
 import expect from "expect";
-import { createStore } from "redux";
+import { createStore, combineReducers } from "redux";
 
 import { pickStateItems, loadState, saveState } from "src/index";
 
@@ -83,7 +83,7 @@ describe("Testing the redux store with the 2 methods", () => {
     storageMocker = storageMock();
     storageMocker.reset();
     store = createStore(todos, loadState(storageMocker, storeTestName));
-    saveState(store, storageMocker, storeTestName);
+    saveState({ store, storage: storageMocker, storename: storeTestName });
   });
   it("should return empty list by default as state", () => {
     expect(store.getState()).toEqual([]);
@@ -103,7 +103,7 @@ describe("Testing the redux store with the 2 methods", () => {
     let newMockStorage = storageMock();
     newMockStorage.setItem(storeTestName, '["Read the docs"]');
     store = createStore(todos, loadState(newMockStorage, storeTestName));
-    saveState(store, newMockStorage, storeTestName);
+    saveState({ store, storage: newMockStorage, storename: storeTestName });
     expect(store.getState()).toEqual(["Read the docs"]);
   });
   it("should return empty list if bad state is recorded into the store", () => {
@@ -111,7 +111,25 @@ describe("Testing the redux store with the 2 methods", () => {
     // state item should be serializable. but instead here, Im passing an array
     newMockStorage.setItem(storeTestName, ["New state"]);
     store = createStore(todos, loadState(newMockStorage, storeTestName));
-    saveState(store, newMockStorage, storeTestName);
+    saveState({ store, storage: newMockStorage, storename: storeTestName });
     expect(store.getState()).toEqual([]);
+  });
+  it("should not store todos in redux if the specified list of items dont specify it", () => {
+    const reducers = combineReducers({
+      todos
+    });
+    let newMockStorage = storageMock();
+    store = createStore(reducers, loadState(newMockStorage, storeTestName));
+    store.dispatch({
+      type: "ADD_TODO",
+      text: "Read the docs"
+    });
+    saveState({
+      store,
+      storage: newMockStorage,
+      storename: storeTestName,
+      items: ["non-todos-object"]
+    });
+    expect(newMockStorage.retrieveAll()).toEqual({});
   });
 });
