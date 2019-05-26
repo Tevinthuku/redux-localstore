@@ -3,20 +3,23 @@ import ReactDOM from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import counter from "./reducers";
+import reducers from "./reducers";
 
-import "./index.css";
 import App from "./App";
+import withTheme from "./HOC/withTheme";
+
 import * as serviceWorker from "./serviceWorker";
 
 import { loadState, saveState } from "../../src";
 
 const preloadedState = loadState();
-const store = createStore(counter, preloadedState);
-saveState({ store });
+const store = createStore(reducers, preloadedState);
+saveState({ store, timer: 1000 });
+
+const ThemedApp = withTheme(App);
 ReactDOM.render(
   <Provider {...{ store }}>
-    <App />
+    <ThemedApp />
   </Provider>,
   document.getElementById("root")
 );
