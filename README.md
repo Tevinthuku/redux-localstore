@@ -135,8 +135,11 @@ If items is not given any value then the whole redux store is saved to localStor
 
 ## Scenarios where this may be useful
 
-1. Saving the current user details to localStorage
-2. Persisting the app theme colors set by a user eg: (dark mode or light mode or even persisting the primary / secondary colors of the app if they are to be changed dynamically based on the user preference)
+1. Persisting the app theme colors set by a user eg: (dark mode or light mode or even persisting the primary / secondary colors of the app if they are to be changed dynamically based on the user preference)
 
-With time I'll create demos on the 2 scenarios above.
+Check the demo folder for the above implementation.
 
+### Getting the demo to run
+1. `cd demo`
+2. `yarn` - installs packages
+3. `yarn start` starts the app
